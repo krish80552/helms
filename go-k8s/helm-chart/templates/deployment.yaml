@@ -6,14 +6,15 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   replicas: {{ .Values.replicaCount }}
+  spec:
+    selector:
+    matchLabels:
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
   template:
     metadata:
       labels:
         app: hello
-    spec:
-      selector:
-      matchLabels:
-        name: hello
+    
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

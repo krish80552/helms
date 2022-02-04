@@ -10,7 +10,7 @@ image:
 
 service:
   name: http
-  type: loadbalancer
+  type: LoadBalancer
   externalPort: 80
   internalPort: 80
 

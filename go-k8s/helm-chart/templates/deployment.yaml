@@ -5,15 +5,15 @@ metadata:
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
-  selector:
-  matchLabels:
-    name: hello
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
         app: hello
     spec:
+      selector:
+      matchLabels:
+        name: hello
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

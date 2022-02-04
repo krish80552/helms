@@ -6,6 +6,8 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    app.kubernetes.io/name: {{ template "fullname" . }}
   template:
     metadata:
       labels:

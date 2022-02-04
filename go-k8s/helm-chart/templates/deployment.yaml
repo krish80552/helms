@@ -14,7 +14,6 @@ spec:
     metadata:
       labels:
         app: hello
-    
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

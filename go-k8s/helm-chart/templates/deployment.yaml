@@ -8,7 +8,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+      app: {{ template "fullname" . }}
   template:
     metadata:
       labels:

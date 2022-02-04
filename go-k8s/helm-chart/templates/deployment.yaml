@@ -1,7 +1,7 @@
 apiVersion: {{ template "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
-  name: hello
+  name: {{ template "fullname" . }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:

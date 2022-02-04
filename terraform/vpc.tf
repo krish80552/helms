@@ -23,10 +23,9 @@ module "vpc" {
   version = "3.2.0"
 
   name                 = "education-vpc"
-  cidr                 = "10.0.0.0/16"
+  cidr                 = "192.168.0.0/16"
   azs                  = data.aws_availability_zones.available.names
-  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  public_subnets       = ["192.168.0.0/18", "192.168.64.0/18", "192.168.128.0/18"]
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
@@ -40,8 +39,5 @@ module "vpc" {
     "kubernetes.io/role/elb"                      = "1"
   }
 
-  private_subnet_tags = {
-    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"             = "1"
-  }
+ 
 }

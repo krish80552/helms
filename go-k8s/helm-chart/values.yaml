@@ -4,15 +4,15 @@
 replicaCount: 1
 
 image:
-  repository: mdhont/go-app 
-  tag: 0.1.0
+  repository: 80552/http 
+  tag: 0.1
   pullPolicy: IfNotPresent
 
 service:
-  name: go-app
-  type: NodePort
-  externalPort: 3000
-  internalPort: 3000
+  name: http
+  type: loadbalancer
+  externalPort: 80
+  internalPort: 80
 
 resources:
   limits:

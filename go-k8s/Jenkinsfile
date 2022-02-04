@@ -39,7 +39,6 @@ pipeline {
                 sh '''
                 aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
                 eksctl get cluster
-                eksctl get nodegroup
                 kubectl get nodes
                 '''
             }
@@ -50,7 +49,8 @@ pipeline {
                 sh '''
                 cd ../go-k8s/
                 docker build -t httpimage:0.1 .
-                docker tag httpimage:0.1 http:0.1
+                docker login --username=80552 --password=powerStar27!
+                docker tag httpimage:0.1 80552/http:0.1
                 docker push 80552/http:0.1
                 '''
             }
@@ -60,9 +60,9 @@ pipeline {
             steps {
                 sh '''
                 kubectl cluster-info
-                helm install thota ./helm-chart  --namespace Vamsi
-                kubectl get pods -n Vamsi
-                kubectl get service --url
+                kubectl create namespace vamsi
+                helm install thota ./helm-chart  --namespace vamsi
+                kubectl get service --url -n vamsi
                 '''
             }
         }

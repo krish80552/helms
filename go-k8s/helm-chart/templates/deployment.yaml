@@ -1,17 +1,17 @@
-apiVersion: {{ template "common.capabilities.deployment.apiVersion" . }}
+apiVersion: v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: hello
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
-    name: {{ template "fullname" . }}
+    name: hello
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}
+        app: hello
     spec:
       containers:
       - name: {{ .Chart.Name }}

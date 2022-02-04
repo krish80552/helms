@@ -1,42 +1,75 @@
 pipeline {
     agent any
-    
+
     stages {
-        
+
         stage('cloning') {
             steps {
                 sh '''
-                git clone https://github.com/krish80552/infradeploy.git
+                git clone https://github.com/krish80552/helms.git
+                cd go-k8s/
                 '''
             }
         }
-        
+
         stage('Create_Infra') {
+            environment {
+                AWS_key = credentials ('Krishna1')
+            }
             steps {
                 sh '''
-                pwd
-                ls -ltr
+                cd ../terraform
+                $aws configure
+                AWS Access Key ID [None]: $AWS_key_USR
+                AWS Secret Access Key [None]: $AWS_key_PSW
+                Default region name [None]: us-west-2
+                Default output format [None]: json
+                
                 terraform init
-                terraform plan 
+                terraform plan
                 terraform apply -auto-approve
                 '''
-            }
+ }
         }
-        
-      
-        stage('Install_tomcat'){
-           
+
+
+        stage('Loggin into EKS'){
+
             steps {
                 sh '''
-                echo '$SSH_Token_PSW' > Krish.pem
-                ansible-playbook -i /tmp/hosts tomcat.yml -vv
+                aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
+                eksctl get cluster
+                eksctl get nodegroup
+                kubectl get nodes
+                '''
+            }
+
+            stage('Docker image build and push into repo'){
+
+            steps {
+                sh '''
+                cd ../go-k8s/
+                docker build -t httpimage:0.1 .
+                docker tag httpimage:0.1 http:0.1
+                docker push 80552/http:0.1
+                '''
+            }
+
+            stage('Deploying the application into k8s'){
+
+            steps {
+                sh '''
+                kubectl cluster-info
+                helm install thota ./helm-chart  --namespace Vamsi
+                kubectl get pods -n Vamsi
+                kubectl get service --url
                 '''
             }
         }
-          
+
     }
-    post { 
-        always { 
+    post {
+        always {
             cleanWs()
         }
     }

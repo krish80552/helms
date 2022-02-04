@@ -5,6 +5,9 @@ metadata:
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
+  selector:
+  matchLabels:
+    name: hello
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:

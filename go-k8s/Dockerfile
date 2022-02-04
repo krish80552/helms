@@ -1,14 +1,7 @@
-FROM gcr.io/bitnami-containers/minideb-extras:jessie-r14
+FROM amazonlinux
+RUN yum install httpd -y
+COPY app-code/index.html /var/www/html/index.html
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+EXPOSE 80
 
-MAINTAINER Bitnami <containers@bitnami.com>
-
-COPY app-code/http-sample /app/http-sample
-
-USER bitnami
-
-WORKDIR /app
-
-EXPOSE 3000
-
-ENTRYPOINT ["/app/http-sample"]
 

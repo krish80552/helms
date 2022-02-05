@@ -20,10 +20,10 @@ pipeline {
                 sh '''
                 cd helms/terraform
                 aws configure
-                AWS Access Key ID [None]: $AWS_key_USR
-                AWS Secret Access Key [None]: $AWS_key_PSW
-                Default region name [None]: us-west-2
-                Default output format [None]: json
+                -- AWS Access Key ID [None]: $AWS_key_USR
+                -- AWS Secret Access Key [None]: $AWS_key_PSW
+                -- Default region name [None]: us-west-2
+                -- Default output format [None]: json
                 
                 terraform init
                 terraform plan

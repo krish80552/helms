@@ -18,7 +18,8 @@ pipeline {
             }
             steps {
                 sh '''
-                cd ../terraform
+                cd ../
+                cd terraform/
                 $aws configure
                 AWS Access Key ID [None]: $AWS_key_USR
                 AWS Secret Access Key [None]: $AWS_key_PSW

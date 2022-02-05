@@ -1,4 +1,3 @@
-@Library('github.com/releaseworks/jenkinslib') _
 pipeline {
     agent any
 
@@ -14,23 +13,17 @@ pipeline {
         }
 
         stage('Create_Infra') {
-            environment {
-                AWS_key = credentials ('Krish1')
-            }
             steps {
+                withAWS(credentials: 'Krish1', region: 'us-west-2'){
                 sh '''
                 cd helms/terraform
-                aws configure
-                -- AWS Access Key ID [None]: $AWS_key_Access Key ID
-                -- AWS Secret Access Key [None]: $AWS_key_Secret Access Key
-                -- Default region name [None]: us-west-2
-                -- Default output format [None]: json
-                
+                aws configure                
                 terraform init
                 terraform plan
                 terraform apply -auto-approve
                 '''
  }
+            }
         }
 
 

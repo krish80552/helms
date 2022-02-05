@@ -17,17 +17,15 @@ pipeline {
                 withCredentials([[
   withAWS(credentials: 'Krish1', region: 'us-west-2') { 
                 sh '''
-   
                 cd helms/terraform
                 aws configure
                 terraform init
                 terraform plan
                 terraform apply -auto-approve
                 '''
- }
+         }
             }
-        }
-
+                    }
 
         stage('Loggin into EKS'){
 

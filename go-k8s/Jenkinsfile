@@ -14,7 +14,7 @@ pipeline {
 
         stage('Create_Infra') {
             steps {
-                withAWS(credentials: 'Krish1', region: 'us-west-2'){
+                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
                 sh '''
                 cd helms/terraform
                 aws configure                

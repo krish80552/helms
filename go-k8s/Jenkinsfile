@@ -14,10 +14,14 @@ pipeline {
 
         stage('Create_Infra') {
             steps {
-  withAWS(credentials: 'Krish1', region: 'us-west-2') { 
+ withCredentials([[
+    $class: 'AmazonWebServicesCredentialsBinding',
+    credentialsId: "Krish1",
+    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+]]) { 
                 sh '''
                 cd helms/terraform
-                aws configure
                 terraform init
                 terraform plan
                 terraform apply -auto-approve

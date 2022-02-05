@@ -15,14 +15,14 @@ pipeline {
 
         stage('Create_Infra') {
             environment {
-                AWS_key = credentials ('Krishna1')
+                AWS_key = credentials ('Krish1')
             }
             steps {
                 sh '''
                 cd helms/terraform
                 aws configure
-                -- AWS Access Key ID [None]: sh "echo '$AWS_key_USR'"
-                -- AWS Secret Access Key [None]: $AWS_key_PSW
+                -- AWS Access Key ID [None]: $AWS_key_Access Key ID
+                -- AWS Secret Access Key [None]: $AWS_key_Secret Access Key
                 -- Default region name [None]: us-west-2
                 -- Default output format [None]: json
                 

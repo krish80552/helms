@@ -42,7 +42,7 @@ pipeline {
                 kubectl get nodes
                 '''
             }
-
+        }
             stage('Docker image build and push into repo'){
 
             steps {
@@ -53,6 +53,7 @@ pipeline {
                 docker tag httpimage:0.1 80552/http:0.1
                 docker push 80552/http:0.1
                 '''
+            }
             }
 
             stage('Deploying the application into k8s'){

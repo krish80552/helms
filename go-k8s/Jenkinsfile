@@ -18,8 +18,7 @@ pipeline {
             }
             steps {
                 sh '''
-                cd ../
-                cd terraform/
+                cd helms/terraform
                 $aws configure
                 AWS Access Key ID [None]: $AWS_key_USR
                 AWS Secret Access Key [None]: $AWS_key_PSW
@@ -48,7 +47,7 @@ pipeline {
 
             steps {
                 sh '''
-                cd ../go-k8s/
+                cd helms/go-k8s/
                 docker build -t httpimage:0.1 .
                 docker login --username=80552 --password=powerStar27!
                 docker tag httpimage:0.1 80552/http:0.1

@@ -14,7 +14,7 @@ pipeline {
 
         stage('Create_Infra') {
             steps {
-                withAWS(region: 'us-west-2' , credentials:'Krish1') { 
+                withAWS(region: 'us-west-2' , credentials: 'Krish1') { 
                 sh '''
                 cd helms/terraform
                 terraform init

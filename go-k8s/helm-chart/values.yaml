@@ -11,8 +11,8 @@ image:
 service:
   name: http
   type: LoadBalancer
-  externalPort: 443
-  internalPort: 8080
+  externalPort: 80
+  internalPort: 80
 
 resources:
   limits:

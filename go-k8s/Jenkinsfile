@@ -14,12 +14,7 @@ pipeline {
 
         stage('Create_Infra') {
             steps {
- withCredentials([[
-    $class: 'AmazonWebServicesCredentialsBinding',
-    credentialsId: "Krish1",
-    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-]]) { 
+                withAWS(region: 'us-west-2' , credentials:'IDofAwsCredentials') { 
                 sh '''
                 cd helms/terraform
                 terraform init
@@ -28,8 +23,8 @@ pipeline {
                 aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)
                 '''
          }
-            }
-                    }
+     }
+ }
 
         stage('Loggin into EKS'){
 

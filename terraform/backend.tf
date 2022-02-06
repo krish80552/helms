@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "newdevopsbucket"
-    key    = "eks"
+    key    = "eks.tfstate"
     region = "us-west-2"
   }
 }

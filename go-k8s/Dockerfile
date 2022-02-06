@@ -1,7 +1,8 @@
 FROM amazonlinux
 RUN yum install httpd -y
 COPY app-code/index.html /var/www/html/index.html
-CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
-EXPOSE 8080
+CMD ["-D","FOREGROUND"]
+ENTRYPOINT ["/usr/sbin/httpd"]
+EXPOSE 80
 
 

@@ -20,7 +20,7 @@ pipeline {
                 terraform init
                 terraform plan
                 terraform apply -auto-approve
-                aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)
+                /usr/local/bin/aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)
                 '''
          }
      }
@@ -31,8 +31,8 @@ pipeline {
             steps {
                 sh '''
                
-                eksctl get cluster
-                kubectl get nodes
+                /usr/local/bin/eksctl get cluster
+                /usr/local/bin/kubectl get nodes
                 '''
             }
         }
@@ -52,12 +52,13 @@ pipeline {
             stage('Deploying the application into k8s'){
 
             steps {
+                withAWS(region: 'us-west-2' , credentials: 'Krish1') { 
                 sh '''
-                kubectl cluster-info
-                kubectl create namespace vamsi
-                helm install thota ./helm-chart  --namespace vamsi
-                kubectl get service --url -n vamsi
-                '''
+                /usr/local/bin/kubectl cluster-info
+                /usr/local/bin/kubectl create namespace vamsi
+                cd helms/go-k8s
+                /usr/local/bin/helm install thota ./helm-chart  -n vamsi
+                /usr/local/bin/kubectl get service -n vamsi
             }
         }
 
